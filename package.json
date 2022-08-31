@@ -26,6 +26,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "pretest:int": "yarn db:test:restart && dotenv -e .env.test -- prisma migrate reset --force",
+    "test:int": "dotenv -e .env.test -- jest -i --no-cache --watch --config jest-int.json",
     "pretest:e2e": "yarn db:test:restart",
     "test:e2e": "dotenv -e .env.test -- jest --watch --no-cache --config ./test/jest-e2e.json"
   },
