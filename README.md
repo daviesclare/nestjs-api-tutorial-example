@@ -9,4 +9,6 @@ yarn start:dev // start api in dev mode
 
 //test
 yarn test:e2e 
+//view test database (cleaned when tests are finished)
+npx dotenv -e .env.test -- prisma studio
 ```
