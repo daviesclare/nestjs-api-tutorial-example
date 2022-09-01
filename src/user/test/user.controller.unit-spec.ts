@@ -8,14 +8,25 @@ describe('UserController', () => {
   let userController: UserController;
   let userService: UserService;
 
-  const dto: EditUserDto = {
+
+  const user: User = {
+    id: 123,
     email: 'vlad@gmail.com',
+    firstName: 'djndj',
+    lastName: 'djsjd',
+    createdAt:  new Date(2018, 11, 24),
+    updatedAt: new Date(2018, 11, 24),
+    hash: 'dsfhsj'
+  }
+
+  const dto: EditUserDto = {
+    email: user.email,
     firstName: 'djndj',
     lastName: 'djsjd'
   };
 
   const mockProductsService = {
-    editUser: jest.fn().mockResolvedValue(dto),
+    editUser: jest.fn().mockResolvedValue(user),
  }
 
   beforeEach(async () => {
@@ -36,20 +47,21 @@ describe('UserController', () => {
 
   describe('editUser', () => {
     describe('when editUser in userController is called', () => {
-      let dtoEdit: EditUserDto;
-      let userId = 123;
-      let user: User;
+      let userReturned: User;
 
       beforeEach(async () => {
-        user = await userController.editUser(userId, dto)  
+        userReturned = await userController.editUser(user.id, dto)  
       })
 
       test('then it should call userService', () => {
-        expect(userService.editUser).toBeCalledWith(userId, dto);
+        expect(userService.editUser).toBeCalledWith(user.id, dto);
       })
 
       test('then is should return a user', () => {
-        expect(user.email).toEqual(dto.email);
+        expect(userReturned.email).toEqual(user.email);
+        expect(userReturned.id).toEqual(user.id);
+        expect(userReturned.firstName).toEqual(user.firstName);
+        expect(userReturned.lastName).toEqual(user.lastName);
       })
     })
   })
